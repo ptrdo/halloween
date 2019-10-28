@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Halloween Concentration</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<style type="text/css">
+  body
+  {
+    height: 100%;
+    background-color: white;
+  }
+  
+  #gameBoard
+  {
+    position: relative;
+    min-width: 152px;
+    max-width: 608px;
+    min-height: 152px;
+    margin: 30px auto;
+    padding: 1px;
+    background-color: orange;
+
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: flex;
+
+    -webkit-flex-flow: row wrap;
+    -moz-flex-flow: row wrap;
+    flex-flow: row wrap;
+  }
+  
+  #gameBoard > div
+  {
+    width: 150px;
+    height: 150px;
+    margin: 1px auto;
+    background-color: white;
+    background-position: 0 0;
+    background-repeat: no-repeat;
+    background-size: contain;
+    cursor: pointer;
+
+    -webkit-flex: 0 0 auto;
+    -moz-flex: 0 0 auto;
+    flex: 0 0 auto;
+  }
+
+  #controls
+  {
+    width: 608px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  #controls input[type="button"]
+  {
+    padding: 8px 16px;
+    background-color: transparent;
+  }
+
+</style>
+</head>
+<body>
+<div id="gameBoard"></div>
+<div id="controls">
+  <input id="play" type="button" value="Do It!" />
+</div>
+<script type="text/javascript">
+  
+var playButton;
+
+var tileImages = "url(images/Alien.png)";
+
+var initializeGame = function(event) {
+
+  playButton = document.getElementById("play");
+  playButton.onclick = doIt;
+
+};
+
+var doIt = function(event) {
+
+  var gameBoard = document.getElementById("gameBoard");
+
+
+
+
+    var div = document.createElement("div");
+    div.style.backgroundImage = tileImages;
+    gameBoard.appendChild(div);
+
+
+
+};
+
+/*  TODO: Make many at once!
+ *
+ *  Eventually, we will need to populate an entire gameBoard with many items.
+ *  To do many things at once, it is usually necessary to keep count.
+ *
+ *  In the doIt function, create a new var count = 0; (at line 84)
+ *  Wrap the div createElement and style and appendChild inside a
+ *
+ *  while (count < 4) { ... }
+ *
+ *  IMPORTANT! Every time through the while, make sure you increment the ++count;
+ */
+
+window.onload = initializeGame;
+
+</script>
+</body>
+</html>

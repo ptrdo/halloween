@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Halloween Concentration</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<style type="text/css">
+  body
+  {
+    height: 100%;
+    background-color: white;
+  }
+
+  #gameBoard
+  {
+    position: relative;
+    min-width: 152px;
+    max-width: 608px;
+    min-height: 152px;
+    margin: 30px auto;
+    padding: 1px;
+    background-color: orange;
+
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: flex;
+
+    -webkit-flex-flow: row wrap;
+    -moz-flex-flow: row wrap;
+    flex-flow: row wrap;
+  }
+
+  #gameBoard > div
+  {
+    width: 150px;
+    height: 150px;
+    margin: 1px auto;
+    background-color: white;
+    background-position: 0 0;
+    background-repeat: no-repeat;
+    background-size: contain;
+    cursor: pointer;
+
+    -webkit-flex: 0 0 auto;
+    -moz-flex: 0 0 auto;
+    flex: 0 0 auto;
+  }
+
+  #controls
+  {
+    width: 608px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  #controls input[type="button"]
+  {
+    padding: 8px 16px;
+    background-color: transparent;
+  }
+
+</style>
+</head>
+<body>
+<div id="gameBoard">
+  <div style="background-image:url(images/Jack.png)"></div>
+</div>
+<div id="controls">
+  <input id="play" type="button" value="Do It!" />
+</div>
+<script type="text/javascript">
+
+  var playButton;
+
+
+  var initializeGame = function(event) {
+
+    alert("loaded!");
+
+
+  };
+
+
+
+
+
+
+  /*  TODO: Test this page in a browser.
+   *
+   *  An event handler has been attached to the window's onload event (line 100).
+   *  Note that there is a var playButton that has also been created (line 72).
+   *
+   *  When the window loads and the initializeGame function is called,
+   *  assign document.getElementById("play") to the playButton variable.
+   *
+   *  Next, just like with the onload handler, create a var doIt = function() { };
+   *  Assign this new event handler to the onclick of the playButton
+   *  and add some code inside to test the button's functionality.
+   */
+
+  window.onload = initializeGame;
+
+</script>
+</body>
+</html>

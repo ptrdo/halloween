@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Halloween Concentration</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<style type="text/css">
+  body
+  {
+    height: 100%;
+    background-color: white;
+  }
+  
+  #gameBoard
+  {
+    position: relative;
+    min-width: 152px;
+    max-width: 608px;
+    min-height: 152px;
+    margin: 30px auto;
+    padding: 1px;
+    background-color: orange;
+
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: flex;
+
+    -webkit-flex-flow: row wrap;
+    -moz-flex-flow: row wrap;
+    flex-flow: row wrap;
+  }
+  
+  #gameBoard > div
+  {
+    width: 150px;
+    height: 150px;
+    margin: 1px;
+    background-color: white;
+    background-position: 0 0;
+    background-repeat: no-repeat;
+    background-size: contain;
+    cursor: pointer;
+
+    -webkit-flex: 0 0 auto;
+    -moz-flex: 0 0 auto;
+    flex: 0 0 auto;
+  }
+
+  #controls
+  {
+    width: 608px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  #controls input[type="button"]
+  {
+    padding: 8px 16px;
+    background-color: transparent;
+  }
+
+</style>
+</head>
+<body>
+<div id="gameBoard"></div>
+<div id="controls">
+  <input id="play" type="button" value="Play!" />
+</div>
+<script type="text/javascript">
+
+var tileCount = 12;
+var playButton;
+var tileElements;
+
+var tileImages = [
+  "url(images/Alien.png)",
+  "url(images/Devil.png)",
+  "url(images/Frank.png)",
+  "url(images/Ghoul.png)",
+  "url(images/Jack.png)",
+  "url(images/Mask.png)"
+];
+
+var initializeGame = function(event) {
+
+  playButton = document.getElementById("play");
+  playButton.onclick = drawBoard;
+  drawBoard();
+
+};
+
+var onTileClick = function(event) {
+
+  alert(this.index);
+
+};
+
+var drawBoard = function(event) {
+
+  var gameBoard = document.getElementById("gameBoard");
+      gameBoard.innerHTML = "";
+      tileElements = [];
+
+  for (var i = 0, half = Math.ceil(tileCount/2); i < tileCount; ++i) {
+
+    var div = document.createElement("div");
+    div.index = i%half;
+    div.style.backgroundImage = tileImages[div.index];
+    div.onclick = onTileClick;
+
+    tileElements.push(div);
+  }
+
+  tileElements.sort(function() { return 0.5 - Math.random(); });
+  tileElements.forEach(function(item){
+    gameBoard.appendChild(item);
+  });
+
+};
+
+
+/*  TODO: Concentration!
+ *
+ *  There's quite a lot left to do, but perhaps you can tackle things one at a time:
+ *
+ *  1. Find a way to check if subsequent clicks are to tiles with the same index value.
+ *  2. Hide the images by default and show them only when clicked. HINT: use CSS
+ *  3. When a match is made, fix the images in view, but otherwise hide them again.
+ *  4. How could you check the board for all winners? HINT: for-while the tileElements.
+ *  5. Keep track of how much time it takes to solve the game. And, count the mistakes too!
+ *
+ *  Do what you can. Peek ahead for hints and clues.
+ *
+ *  Trick or Treat!
+ *
+ */
+
+window.onload = initializeGame;
+
+</script>
+</body>
+</html>

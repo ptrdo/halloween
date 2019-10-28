@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Halloween Concentration</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<style type="text/css">
+  body
+  {
+    height: 100%;
+    background-color: white;
+    transition: background-color 0.8s ease;
+  }
+  
+  #gameBoard
+  {
+    position: relative;
+    width: 608px;
+    margin: 30px auto;
+    padding: 1px;
+    background-color: orange;
+
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: flex;
+
+    -webkit-flex-flow: row wrap;
+    -moz-flex-flow: row wrap;
+    flex-flow: row wrap;
+  }
+  
+  #controls
+  {
+    width: 608px;
+    min-height: 152px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  #controls input[type="button"]
+  {
+    padding: 8px 16px;
+    background-color: transparent;
+  }
+  
+  #gameBoard > div
+  {
+    width: 150px;
+    height: 150px;
+    margin: 1px;
+    background-color: white;
+    background-position: 0 -150px;
+    background-repeat: no-repeat;
+    background-size: contain;
+    transition: background-position 200ms ease;;
+    cursor: pointer;
+
+    -webkit-flex: 0 0 auto;
+    -moz-flex: 0 0 auto;
+    flex: 0 0 auto;
+  }
+
+  #gameBoard > div.clicked,
+  #gameBoard > div.matched
+  {
+    background-position: 0 0;
+  }
+
+  #gameBoard > div.matched
+  {
+    background-color: transparent;
+  }
+
+  body.winner #gameBoard,
+  body.winner input[type="button"]
+  {
+    background-color: transparent;
+    color: white;
+  }
+
+  body.winner
+  {
+    background-color: black;
+  }
+
+</style>
+</head>
+<body>
+<div id="gameBoard">
+  <!-- Rather than write all the tiles, JavaScript will insert them. -->
+</div>
+<div id="controls">
+  <input id="play" type="button" value="New Game" />
+</div>
+<script type="text/javascript">
+
+/**
+ * These are all the variables
+ * required for the game...
+ */
+
+var gameBoard;
+var gameStart;
+var mistakes = 0;
+var tileCount = 12;
+var tileElements;
+var lastClick;
+var validating = false;
+
+/**
+ * These are all the images
+ * stored in an array...
+ */
+
+var tileImages = [
+  "images/Alien.png",
+  "images/Devil.png",
+  "images/Frank.png",
+  "images/Ghoul.png",
+  "images/Jack.png",
+  "images/Mask.png",
+  "images/Slasher.png",
+  "images/Zombie.png"
+];
+
+/**
+ * This function is called once
+ * when the page loads, setting the basics...
+ */
+
+var initializeGame = function()
+{
+  gameBoard = document.getElementById("gameBoard");
+  document.getElementById("play").onclick = drawBoard;
+  drawBoard();
+};
+
+/**
+ * This is the event handler
+ * that runs with every tile click...
+ */
+
+var onTileClick = function(event)
+{
+  var result,thisClick = event.target;
+
+  if (validating || thisClick == lastClick || thisClick.getAttribute("class") == "matched") {
+    return;
+  }
+
+  validating = true;
+  thisClick.setAttribute("class","clicked");
+  
+  if (lastClick == null) {
+
+    lastClick = thisClick;
+    validating = false;
+
+  } else {
+
+    if (lastClick.index == thisClick.index) {
+
+      result = "matched";
+
+    } else {
+
+      result = "wrong";
+      ++mistakes;
+    }
+
+    setTimeout(function(){
+
+      lastClick.setAttribute("class",result);
+      thisClick.setAttribute("class",result);
+
+      validateBoard();
+      validating = false;
+      lastClick = null;
+
+    }, 500);
+
+  }
+};
+
+/**
+ * This function checks for a winning game...
+ */
+
+var validateBoard = function()
+{
+  var unmatched = 0;
+  
+  for (var i = 0; i < tileElements.length; i++) {
+
+    if (tileElements[i].getAttribute("class") != "matched") {
+      
+      ++unmatched;
+    }
+  }
+  
+  if (unmatched<2) {
+    
+    document.body.setAttribute("class","winner");
+
+    var gameDone = new Date();
+    var gameTime = gameDone - gameStart;
+        gameTime /= 1000; // convert Date's milliseconds into seconds
+
+    alert("Congratulations!\nYou have solved the puzzle!\nTime: " + gameTime + " seconds!\nMistakes: " + mistakes);
+  }  
+};
+
+/** This function starts the game over...
+ */
+
+var drawBoard = function(event) {
+  
+  document.body.setAttribute("class","");
+  gameBoard.innerHTML = "";
+  tileElements = [];
+  mistakes = 0;
+  
+  for (var i = 0, half = Math.ceil(tileCount/2); i < tileCount; i++) {
+  
+    var div = document.createElement("div");
+
+    div.index = i%half;
+    div.style.backgroundImage = "url("+tileImages[div.index]+")";
+    div.onclick = onTileClick;
+
+    tileElements.push(div);
+  }
+
+  tileElements.sort(function() { return 0.5 - Math.random(); });
+  tileElements.forEach(function(item){
+    gameBoard.appendChild(item);
+  });
+
+  gameStart = new Date();
+
+};
+
+
+/**
+ * Whenever the page loads,
+ * the game is initialized for play...
+ */
+
+window.onload = initializeGame;
+
+</script>
+</body>
+</html>

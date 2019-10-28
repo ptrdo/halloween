@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Halloween Concentration</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<style type="text/css">
+  body
+  {
+    height: 100%;
+    background-color: white;
+  }
+  
+  #gameBoard
+  {
+    position: relative;
+    min-width: 152px;
+    max-width: 608px;
+    min-height: 152px;
+    margin: 30px auto;
+    padding: 1px;
+    background-color: orange;
+
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: flex;
+
+    -webkit-flex-flow: row wrap;
+    -moz-flex-flow: row wrap;
+    flex-flow: row wrap;
+  }
+  
+  #gameBoard > div
+  {
+    width: 150px;
+    height: 150px;
+    margin: 1px;
+    background-color: white;
+    background-position: 0 0;
+    background-repeat: no-repeat;
+    background-size: contain;
+    cursor: pointer;
+
+    -webkit-flex: 0 0 auto;
+    -moz-flex: 0 0 auto;
+    flex: 0 0 auto;
+  }
+
+  #controls
+  {
+    width: 608px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  #controls input[type="button"]
+  {
+    padding: 8px 16px;
+    background-color: transparent;
+  }
+
+</style>
+</head>
+<body>
+<div id="gameBoard"></div>
+<div id="controls">
+  <input id="play" type="button" value="Do It!" />
+</div>
+<script type="text/javascript">
+
+
+var playButton;
+
+var tileImages = [
+  "url(images/Alien.png)",
+  "url(images/Devil.png)",
+  "url(images/Frank.png)",
+  "url(images/Ghoul.png)",
+  "url(images/Jack.png)",
+  "url(images/Mask.png)"
+];
+
+var initializeGame = function(event) {
+
+  playButton = document.getElementById("play");
+  playButton.onclick = doIt;
+
+};
+
+var onTileClick = function(event) {
+
+  alert(this.index);
+
+};
+
+var doIt = function(event) {
+
+  var gameBoard = document.getElementById("gameBoard");
+
+
+  for (var count = 0; count < tileImages.length; ++count) {
+
+    var div = document.createElement("div");
+    div.index = count;
+    div.style.backgroundImage = tileImages[count];
+    div.onclick = onTileClick;
+    gameBoard.appendChild(div);
+  }
+
+};
+
+
+/*  TODO: Setup a board for a game of concentration!
+ *
+ *  Rename the doIt function to something that is more descriptive, like: drawBoard
+ *  In addition to drawing the board when the button is clicked, do it when the game is initialized.
+ *
+ *  The convention in for-loops is to count with a variable named "i". Use this instead of "count".
+ *
+ *  This will be a "concentration" game, so there will need to be two of each tile (to make a match).
+ *  Rather than for-looping while i < tileImages.length; create a new variable to determine board size...
+ *
+ *  var tileCount = 12; // at line 70
+ *
+ *  This will make a game board of 12 tiles, which will be 6 icons, each appearing twice.
+ *  Change the for-loop expression to create a new variable that will be a module for each half:
+ *
+ *    for (var i = 0, half = Math.ceil(tileCount/2); i < tileCount; ++i) { ...
+ *
+ *  Change the code inside the for-loop to take advantage of this new variable:
+ *
+ *    div.index = i%half;
+ *    div.style.backgroundImage = tileImages[div.index];
+ *
+ *  Note that multiple clicks to the button will append another board, and another!
+ *  Fix this by emptying the board within the drawBoard function (before the for-loop):
+ *
+ *    gameBoard.innerHTML = "";
+ *
+ */
+
+window.onload = initializeGame;
+
+</script>
+</body>
+</html>
